@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ! [ -d "/data/symfony" ]; then symfony new symfony --webapp; fi
+if ! [ -d "/data/symfony" ]; then cd .. &&  symfony new symfony --webapp && cd symfony; fi
 
 composer install
-cd symfony && symfony server:start
+symfony server:start
