@@ -1,0 +1,7 @@
+services:
+   symfony:
+      build: docker/symfony
+      ports:
+        - 8000:8000
+      volumes: 
+        - ./data:/data
