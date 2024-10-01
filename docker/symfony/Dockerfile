@@ -14,14 +14,14 @@ run curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | b
 run apt install symfony-cli -y
 run git config --global user.email "dupontstef80@gmail.com"
 copy php.ini /etc/php/8.3/cli/php.ini
-#run symfony check:requirements
 
 run symfony new symfony --webapp
 run cd /data/symfony
 
 workdir /data/symfony
-run composer install
 
 expose 8000:8000
 
 cmd ["symfony", "server:start"]
+
+run composer install
