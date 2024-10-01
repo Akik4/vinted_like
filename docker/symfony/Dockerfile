@@ -18,6 +18,7 @@ copy php.ini /etc/php/8.3/cli/php.ini
 
 run symfony new symfony --webapp
 run cd /data/symfony
+run composer install
 
 workdir /data/symfony
 
