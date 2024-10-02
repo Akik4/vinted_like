@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<form class="d-flex w-25" role="search">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="value">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+<div>"SELECT * from article WHERE name == {{kiwi}}"</div>
+{{kiwi}}
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Filtre
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="Electronique">Electronique</a></li>
+      <li><a class="dropdown-item" href="Vetement">Vetêment</a></li>
+      <li><a class="dropdown-item" href="Autre">Autre</a></li>
+    </ul>
+  </div>
+{% endblock %}
+

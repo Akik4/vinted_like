@@ -14,24 +14,29 @@ use App\Form\ArticleFormType;
 
 class TestController extends AbstractController
 {
-    #[Route('/test', name: 'app_test')]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/test/{id}', name: 'app_test')]
+    public function index(String $id,Request $request, EntityManagerInterface $entityManager): Response
     {
-        $article = new Article();
-
+        if($id <= 0) {
+            $article = new Article();
+        } else {
+            $article = $entityManager->getRepository(Article::class)->find($id);
+        }
+        
         $form = $this->createForm(ArticleFormType::class, $article);
 
+        
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-        
             $task = $form->getData();
-
-            $entityManager->persist($task);
+            if( $form->get('delete')->isClicked()){
+                $entityManager->remove($task);
+            } else {
+                $entityManager->persist($task);
+            }
             $entityManager->flush();    
-
-            return $this->redirectToRoute('app_home');  
+            return $this->redirectToRoute('app_catalog');
         }
-
         return $this->render('test/new.html.twig', [
             'form' => $form,
         ]);
