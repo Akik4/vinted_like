@@ -23,6 +23,7 @@ class ArticleFormType extends AbstractType
             ->add('content', TextareaType::class, ['required'=>false])   
             ->add('save', SubmitType::class, ['label' => 'Mettre en vente'])    
             ->add('delete', SubmitType::class, ['label' => 'supprimer'])
+            ->add('favoris', SubmitType::class, ['label' => 'favoris'])
             ;
     }
 

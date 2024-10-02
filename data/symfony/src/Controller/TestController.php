@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 use App\Entity\Article;
 use App\Form\ArticleFormType;
+use App\Entity\Favoris;
 
 
 class TestController extends AbstractController
@@ -27,13 +28,16 @@ class TestController extends AbstractController
 
         
         $form->handleRequest($request);
+        $task = $form->getData();
+        if( $form->get('delete')->isClicked()){
+            $entityManager->remove($task);
+        } else if ($form->get('favoris')->isClicked()){
+            $favoris = new Favoris();
+            $favoris->setArticle($article);
+            $entityManager->persist($favoris);
+        }
         if ($form->isSubmitted() && $form->isValid()) {
-            $task = $form->getData();
-            if( $form->get('delete')->isClicked()){
-                $entityManager->remove($task);
-            } else {
-                $entityManager->persist($task);
-            }
+            $entityManager->persist($task);            
             $entityManager->flush();    
             return $this->redirectToRoute('app_catalog');
         }
