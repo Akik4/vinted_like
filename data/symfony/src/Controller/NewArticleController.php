@@ -17,9 +17,14 @@ use App\Repository\FavorisRepository;
 
 
 
-class TestController extends AbstractController
+class NewArticleController extends AbstractController
 {
-    #[Route('/test/{id}', name: 'app_test')]
+    #[Route('/create-article')]
+    public function emptyRedirect() {
+        return $this->redirectToRoute('app_article_creation', ["id"=> 0]);
+    }
+
+    #[Route('/create-article/{id}', name: 'app_article_creation')]
     public function index(String $id,Request $request, UserInterface $user, ArticleService $articleService): Response
     {
         
@@ -29,7 +34,7 @@ class TestController extends AbstractController
         
         $form->handleRequest($request);
 
-        if($articleService->handleRequest($form, $this)){
+        if($articleService->handleRequest($form, $user)){
             return $this->redirectToRoute('app_catalog');
         }
 

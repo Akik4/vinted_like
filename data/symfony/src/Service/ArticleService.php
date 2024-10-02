@@ -47,11 +47,12 @@ class ArticleService{
         $this->entityManager->flush();    
     }
 
-    function updateFavorisState($task) {
+    function updateFavorisState($task, $user) {
         $favoris = $this->favorisRepo->findOneByArticle($task->getId());
             if(!$favoris){
                 $favoris = new Favoris();
                 $favoris->setArticle($task);
+                $favoris->setUser($user);
                 $this->entityManager->persist($favoris);
             } else {
                 $this->entityManager->remove($favoris);
@@ -59,18 +60,20 @@ class ArticleService{
             $this->entityManager->flush();
     }
 
-    function buyArticle($task){
+    function buyArticle($task, $user){
         $task->setBuy(true);
+        $task->setBuyer($user);
         $this->entityManager->persist($task);            
         $this->entityManager->flush();
     }
 
-    function updateArticle($task){
+    function updateArticle($task, $user){
+        $task->setSeller($user);
         $this->entityManager->persist($task);            
         $this->entityManager->flush();
     }
 
-    function handleRequest($form) : Bool {
+    function handleRequest($form, $user_id) : Bool {
         $task = $form->getData();
 
         if( $form->get('delete')->isClicked()){
@@ -79,17 +82,17 @@ class ArticleService{
         } 
     
         if ($form->get('favoris')->isClicked()){
-            $this->updateFavorisState($task);
+            $this->updateFavorisState($task, $user_id);
             return true;
         }
         
         if ($form->get('buy')->isClicked()){
-            $this->buyArticle($task);
+            $this->buyArticle($task, $user_id);
             return true;
         }
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->updateArticle($task);
+            $this->updateArticle($task, $user_id);
             return true;
         }
 
