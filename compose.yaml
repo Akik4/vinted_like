@@ -1,5 +1,6 @@
 services:
    symfony:
+      container_name: symfony
       build: docker/symfony
       ports:
         - 8000:8000
@@ -8,6 +9,7 @@ services:
       links:
         - "mysql:database"
    mysql:
+      container_name: mariadb
       image: mariadb
       volumes:
         - ./mariadb/data:/var/lib/mysql
