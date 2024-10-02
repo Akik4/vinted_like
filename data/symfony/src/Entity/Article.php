@@ -34,6 +34,9 @@ class Article
     #[ORM\OneToMany(targetEntity: Favoris::class, mappedBy: 'article', orphanRemoval: true)]
     private Collection $favoris;
 
+    #[ORM\Column(options: ["default" => 0])]
+    private ?bool $is_buy = null;
+
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
@@ -118,6 +121,18 @@ class Article
                 $favori->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isBuy(): ?bool
+    {
+        return $this->is_buy;
+    }
+
+    public function setBuy(bool $is_buy): static
+    {
+        $this->is_buy = $is_buy;
 
         return $this;
     }

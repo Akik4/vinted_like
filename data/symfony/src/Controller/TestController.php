@@ -33,7 +33,10 @@ class TestController extends AbstractController
         $task = $form->getData();
         if( $form->get('delete')->isClicked()){
             $entityManager->remove($task);
-        } else if ($form->get('favoris')->isClicked()){
+            $entityManager->flush();    
+            return $this->redirectToRoute('app_catalog');
+        } 
+        else if ($form->get('favoris')->isClicked()){
             $favoris = $aRepo->findOneByArticle($id);
             if(!$favoris){
                 $favoris = new Favoris();
@@ -42,8 +45,13 @@ class TestController extends AbstractController
             } else {
                 $entityManager->remove($favoris);
             }
+            return $this->redirectToRoute('app_catalog');
         }
-        if ($form->isSubmitted() && $form->isValid()) {
+        else if ($form->get('buy')->isClicked()){
+            $task->setBuy(true);
+            return $this->redirectToRoute('app_catalog');
+        }
+        else if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($task);            
             $entityManager->flush();    
             return $this->redirectToRoute('app_catalog');
