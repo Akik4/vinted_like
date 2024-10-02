@@ -11,12 +11,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Article;
 use App\Form\ArticleFormType;
 use App\Entity\Favoris;
+use App\Repository\FavorisRepository;
+
 
 
 class TestController extends AbstractController
 {
     #[Route('/test/{id}', name: 'app_test')]
-    public function index(String $id,Request $request, EntityManagerInterface $entityManager): Response
+    public function index(String $id,Request $request, EntityManagerInterface $entityManager, FavorisRepository $aRepo): Response
     {
         if($id <= 0) {
             $article = new Article();
@@ -32,9 +34,14 @@ class TestController extends AbstractController
         if( $form->get('delete')->isClicked()){
             $entityManager->remove($task);
         } else if ($form->get('favoris')->isClicked()){
-            $favoris = new Favoris();
-            $favoris->setArticle($article);
-            $entityManager->persist($favoris);
+            $favoris = $aRepo->findOneByArticle($id);
+            if(!$favoris){
+                $favoris = new Favoris();
+                $favoris->setArticle($article);
+                $entityManager->persist($favoris);
+            } else {
+                $entityManager->remove($favoris);
+            }
         }
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($task);            

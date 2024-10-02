@@ -40,4 +40,14 @@ class FavorisRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findOneByArticle($value): ?Favoris
+       {
+           return $this->createQueryBuilder('f')
+               ->andWhere('f.article = :val')
+               ->setParameter('val', $value)
+               ->getQuery()
+               ->getOneOrNullResult()
+           ;
+       }
 }
