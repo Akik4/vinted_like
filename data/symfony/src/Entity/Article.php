@@ -35,7 +35,7 @@ class Article
     private Collection $favoris;
 
     #[ORM\Column(options: ["default" => 0])]
-    private ?bool $is_buy = null;
+    private ?bool $is_buy = false;
 
     public function __construct()
     {
