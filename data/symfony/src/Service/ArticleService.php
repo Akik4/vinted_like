@@ -54,8 +54,12 @@ class ArticleService{
                 $favoris->setArticle($task);
                 $favoris->setUser($user);
                 $this->entityManager->persist($favoris);
+                $task->setFav($task->getFav() + 1);
+                $this->entityManager->persist($task);
             } else {
                 $this->entityManager->remove($favoris);
+                $task->setFav($task->getFav() - 1);
+                $this->entityManager->persist($task);
             }
             $this->entityManager->flush();
     }

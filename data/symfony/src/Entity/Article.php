@@ -23,7 +23,7 @@ class Article
     private ?float $price = null;
 
     #[ORM\Column(nullable: true)]           
-    private ?int $fav = null;
+    private ?int $fav = 0;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;

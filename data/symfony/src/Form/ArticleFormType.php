@@ -19,7 +19,6 @@ class ArticleFormType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('price', IntegerType::class)
-            ->add('fav', IntegerType::class)
             ->add('content', TextareaType::class, ['required'=>false])   
             ->add('favoris', SubmitType::class, ['label' => 'favoris'])
             ->add('buy', SubmitType::class, ['label' => 'Buy'])
