@@ -35,14 +35,14 @@ class Article
     private Collection $favoris;
 
     #[ORM\Column(options: ["default" => 0])]
-    private ?bool $is_buy = false;
+    private ?bool $is_buy = false   ;
 
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
     }
 
-                    public function getId(): ?int
+    public function getId(): ?int
     {
         return $this->id;
     }
