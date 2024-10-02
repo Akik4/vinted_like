@@ -76,17 +76,17 @@ class ArticleService{
     function handleRequest($form, $user_id) : Bool {
         $task = $form->getData();
 
-        if( $form->get('delete')->isClicked()){
+        if($form->has('delete') && $form->get('delete')->isClicked()){
             $this->deleteArticle($task);
             return true;
         } 
     
-        if ($form->get('favoris')->isClicked()){
+        if ($form->has('favoris') && $form->get('favoris')->isClicked()){
             $this->updateFavorisState($task, $user_id);
             return true;
         }
         
-        if ($form->get('buy')->isClicked()){
+        if ($form->has('buy') && $form->get('buy')->isClicked()){
             $this->buyArticle($task, $user_id);
             return true;
         }

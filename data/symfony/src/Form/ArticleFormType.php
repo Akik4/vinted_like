@@ -21,10 +21,10 @@ class ArticleFormType extends AbstractType
             ->add('price', IntegerType::class)
             ->add('fav', IntegerType::class)
             ->add('content', TextareaType::class, ['required'=>false])   
-            ->add('save', SubmitType::class, ['label' => 'Mettre en vente'])    
-            ->add('delete', SubmitType::class, ['label' => 'supprimer'])
             ->add('favoris', SubmitType::class, ['label' => 'favoris'])
             ->add('buy', SubmitType::class, ['label' => 'Buy'])
+            ->add('save', SubmitType::class, ['label' => 'Mettre en vente'])    
+            ->add('delete', SubmitType::class, ['label' => 'supprimer'])
             ;
     }
 
