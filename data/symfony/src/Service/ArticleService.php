@@ -13,6 +13,21 @@ class ArticleService{
 
     function getAllArticlesFromDB(){
         
-        return $this->entityManager->getRepository(Article::class)->findAll();
+        $articles = $this->entityManager->getRepository(Article::class)->findAll();
+        $universes = [];
+        foreach($articles as $article)
+        {
+            if(!$article->isBuy()){
+                $universes[] = [
+                    'id' => $article->getId(),
+                    'name' => $article->getName(),
+                    'price' => $article->getPrice(),
+                    'fav' => $article->getFav(),
+                    'content' => $article->getContent(),
+                ];
+            }
+        }
+
+        return $universes;
     }
 }
