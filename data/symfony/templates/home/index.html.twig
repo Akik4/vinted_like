@@ -3,18 +3,21 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/data/symfony/src/Controller/HomeController.php</code></li>
-        <li>Your template at <code>/data/symfony/templates/home/index.html.twig</code></li>
+<form class="d-flex w-25" role="search">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="value">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+<div>"SELECT * from article WHERE name == {{kiwi}}"</div>
+{{kiwi}}
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Filtre
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="Electronique">Electronique</a></li>
+      <li><a class="dropdown-item" href="Vetement">Vetêment</a></li>
+      <li><a class="dropdown-item" href="Autre">Autre</a></li>
     </ul>
-</div>
+  </div>
 {% endblock %}
+
