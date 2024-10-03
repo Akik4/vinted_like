@@ -1,37 +1,43 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div style="display: flex; align-items: flex-start; max-width: 800px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
-    
-    <!-- Image Section on the left -->
-    <div style="flex-shrink: 0; margin-right: 20px;">
-        <img src="{{ article.imgUrl }}" alt="Product Image" style="width: 200px; height: auto; border-radius: 10px;">
-    </div>
+	<section class="section-product-page d-flex align-items-center " style="height:80vh">
 
-    <!-- Product Information Section on the right -->
-    <div style="flex-grow: 1;">
-        <!-- Product Title -->
-        <h2 style="font-size: 22px; margin-bottom: 10px;">{{ article.name }}</h2>
+		<div
+			style="display: flex; align-items: center; max-width: 90%; margin: auto; padding: 20px; height: 80%">
 
-        <!-- Price -->
-        <p style="font-size: 18px; color: #333; margin-bottom: 10px;">
-            <strong>{{ article.price }}</strong> €
-        </p>
+			<!-- Image Section on the left -->
+			<div style="flex-shrink: 0; margin-right: 20px; width:65%">
+				<img src="{{ article.imgUrl }}" alt="Product Image" style="width: 100%; height: auto; border-radius: 5px; background-size:contain">
+			</div>
 
-        <!-- Description or Content -->
-        <p style="font-size: 16px; color: #555; margin-bottom: 20px;">
-            {{ article.content }}
-        </p>
+			<!-- Product Information Section on the right -->
+			<div class="d-flex justify-content-between" style="flex-direction:column; height:65%;">
 
-        <!-- Seller Information -->
-        <div style="font-size: 14px; color: #888; margin-bottom: 20px;">
-            Seller: <a href="mailto:{{ article.seller.email }}" style="color: #007bff;">{{ article.seller.email }}</a>
-        </div>
+				<h2 style="font-size: 26px; margin-bottom: 10px;">{{ article.name }}</h2>
 
-        <!-- Call-to-Action Button -->
-        <div>
-            <a href="#" class="btn btn-primary" style="padding: 10px 20px; background-color: #007bff; color: white; border-radius: 5px; text-decoration: none;">Message Seller</a>
-        </div>
-    </div>
-</div>
+				<p style="font-size: 16px; color: #555; margin-bottom: 20px;">
+					{{ article.content }}
+				</p>
+				<p style="font-size: 24px; color: #333; margin-bottom: 10px;">
+					<strong>{{ article.price }}
+						€</strong>
+
+
+				</p>
+
+
+				<div style="font-size: 14px; color: #888; margin-bottom: 20px;">
+					Seller:
+					<a href="mailto:{{ article.seller.email }}" style="color: #007bff;">{{ article.seller.email }}</a>
+				</div>
+
+				<div class="align-self-baseline">
+
+					<a href="#" class="btn btn-primary " style="padding: 10px 20px; background-color: #007bff; color: white; border-radius: 5px; text-decoration: none;">Message Seller</a>
+
+				</div>
+			</div>
+		</div>
+	</section>
 {% endblock %}
