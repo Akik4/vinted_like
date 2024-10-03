@@ -2,6 +2,6 @@
 
 if ! [ -d "/data/symfony" ]; then symfony new symfony --webapp; fi
 
-cd symfony
+cd /data/symfony
 composer install
 symfony server:start

@@ -7,7 +7,8 @@ VOLUME /data
 COPY ./start.sh /
 RUN chmod +x /start.sh
 run apt-get update -y
-run apt-get install curl -y
+run apt-get install curl dos2unix -y
+run dos2unix /start.sh
 run apt-get install php php-curl php-mysql -y
 run apt-get install php-common libapache2-mod-php php-cli php-xml php-zip unzip -y
 
