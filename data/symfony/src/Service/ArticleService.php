@@ -22,12 +22,13 @@ class ArticleService{
         {
             if(!$article->isBuy()){
                 $universes[] = [
-                    'id' => $article->getId(),
-                    'name' => $article->getName(),
-                    'price' => $article->getPrice(),
-                    'fav' => $article->getFav(),
-                    'content' => $article->getContent(),
-                    'sender' => $article->getSeller()->getId()
+                    'id'        => $article->getId(),
+                    'name'      => $article->getName(),
+                    'price'     => $article->getPrice(),
+                    'fav'       => $article->getFav(),
+                    'content'   => $article->getContent(),
+                    'sender'    => $article->getSeller()->getId(),
+                    'id'        => $article->getId()
                 ];
             }
         }
@@ -35,12 +36,15 @@ class ArticleService{
         return $universes;
     }
 
-    function getFormArticle($id) : Article{
+    function getFormArticle($id) : ?Article{
         if($id <= 0) {
             return $article = new Article();
         } 
-
-        return $article = $this->entityManager->getRepository(Article::class)->find($id);
+        
+        if($article = $this->entityManager->getRepository(Article::class)->find($id)){
+            return $article;
+        }
+        return NULL;
     }
 
     function deleteArticle($task){

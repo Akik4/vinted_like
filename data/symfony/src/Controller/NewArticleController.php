@@ -24,14 +24,24 @@ class NewArticleController extends AbstractController
         return $this->redirectToRoute('app_article_creation', ["id"=> 0]);
     }
 
+    #[Route('/addtofavorite/{articleid}', name: "app_add_to_favorite")]
+    public function addToFavorite(int $articleid, ArticleService $articleService, UserInterface $user) {
+        $article = $articleService->getFormArticle($articleid);
+        $articleService->updateFavorisState($article, $user);
+        return $this->redirectToRoute('app_catalog');
+    }
+
+
     #[Route('/create-article/{id}', name: 'app_article_creation')]
     public function index(String $id,Request $request, UserInterface $user, ArticleService $articleService): Response
     {
         
-        $article = $articleService->getFormArticle($id);
+        if(!$article = $articleService->getFormArticle($id)){
+            return $this->redirectToRoute('app_article_creation', ['id' => 0]);
+        }
         
         $form = $this->createForm(ArticleFormType::class, $article);
-        
+
         $form->handleRequest($request);
 
         if($articleService->handleRequest($form, $user)){
@@ -39,7 +49,6 @@ class NewArticleController extends AbstractController
         }
 
         return $this->render('test/new.html.twig', [
-            'lastusername' => $article->getSeller()->getId(),
             'form' => $form,
         ]);
     }

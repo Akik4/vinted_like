@@ -11,13 +11,16 @@
 <div class="example-wrapper">
     {% for article in articles %}
         <div>
-                <p>{{ article.name}} |
-                {{ article.price}} |
+            <p>
+                {{ article.name}}    |
+                {{ article.price}}   |
                 {{ article.content}} |
-                {{ article.fav}} | 
-            {% if article.sender == userId %}
-                <a href="/create-article/{{ article.id }}">modifier</a>
-            {% endif %}
+                {{ article.fav}}     | 
+                {% if article.sender == userId %}
+                    <a href="/create-article/{{ article.id }}">modifier</a>
+                {% else %} 
+                <a href="{{ path('app_add_to_favorite', {'articleid': article.id }) }}">Favoris</a>
+                {% endif %} 
             </p> 
         </div>    
     {% endfor %}
