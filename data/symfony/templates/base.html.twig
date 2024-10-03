@@ -46,10 +46,55 @@
 			</div>
 		</nav>
 		{% block body %}{% endblock %}
-	</body>
-	<script>
-		const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-const popoverList = [... popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
-	</script>
+		<footer class="bg-light">
+			<div class="d-flex align-self-center w-100 justify-content-around">
+				<ul class="navbar-nav  mb-2 mb-lg-0 text-start">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="#">Vinted</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link" href="#" role="button">
+							A propos de Vinted
+						</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link" href="#" role="button">
+							Carrière
+						</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link" href="#" role="button">
+							Presse
+						</a>
+					</li>
 
-</html>
+				</ul>
+				<ul class="navbar-nav  mb-2 mb-lg-0 text-start">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="#">Découvrir</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link" href="#" role="button"></a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link" href="#" role="button">
+							Vérification de l'article
+						</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link" href="#" role="button">
+							Applications mobiles
+						</a>
+					</li>
+
+				</ul>
+			</div>
+			<div class="card-body d-flex justify-content-center align-self-center">
+				<p class="card-text px-3">Politique de confidentialité.</p>
+				<p class="card-text px-3">Politique de cookie.</p>
+				<p class="card-text px-3">Termes et Conditions.</p>
+			</div>
+		</div>
+	</body>
+</html></footer></body><script>const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+const popoverList = [... popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))</script></html>
