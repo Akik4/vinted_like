@@ -23,7 +23,7 @@ class MessageController extends AbstractController
 
         return $this->render('message/home.html.twig', [
             'userid' => $user->getId(),
-            'conversations_id' => $conversations
+            'conversations_id' => $conversations            
         ]);
     }
 
@@ -31,7 +31,7 @@ class MessageController extends AbstractController
     public function index(String $id, Request $request, EntityManagerInterface $entityManager, UserInterface $user): Response
     { //String addition
         $form = $this->createFormBuilder(null)
-            ->add('Message', TextType::class, [
+            ->add('message', TextType::class, [
                 'attr' => [
                     'placeholder' => 'Votre message...'
                 ],

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\MessageRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use DateTime;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
 class Message
@@ -28,8 +29,12 @@ class Message
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user2 = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, options: ["default" => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeInterface $datetime = null;
+
+    public function __construct(\DateTimeInterface $date = new DateTime("now")) {
+        $this->datetime = $date;
+      }
 
     public function getId(): ?int
     {
