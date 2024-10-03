@@ -23,7 +23,7 @@ class Article
     private ?float $price = null;
 
     #[ORM\Column(nullable: true)]           
-    private ?int $fav = null;
+    private ?int $fav = 0;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
@@ -35,14 +35,21 @@ class Article
     private Collection $favoris;
 
     #[ORM\Column(options: ["default" => 0])]
-    private ?bool $is_buy = false;
+    private ?bool $is_buy = false   ;
+
+    #[ORM\ManyToOne(inversedBy: 'articles')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $seller = null;
+
+    #[ORM\ManyToOne(inversedBy: 'articles_buyed')]
+    private ?User $buyer = null;
 
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
     }
 
-                    public function getId(): ?int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -133,6 +140,30 @@ class Article
     public function setBuy(bool $is_buy): static
     {
         $this->is_buy = $is_buy;
+
+        return $this;
+    }
+
+    public function getSeller(): ?User
+    {
+        return $this->seller;
+    }
+
+    public function setSeller(?User $seller): static
+    {
+        $this->seller = $seller;
+
+        return $this;
+    }
+
+    public function getBuyer(): ?User
+    {
+        return $this->buyer;
+    }
+
+    public function setBuyer(?User $buyer): static
+    {
+        $this->buyer = $buyer;
 
         return $this;
     }

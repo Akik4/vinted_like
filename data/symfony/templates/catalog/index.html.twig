@@ -9,14 +9,19 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello ✅</h1>
-
     {% for article in articles %}
         <div>
-                <p>{{ article.name}} |
-                {{ article.price}} |
+            <p>
+                {{ article.name}}    |
+                {{ article.price}}   |
                 {{ article.content}} |
-                {{ article.fav}} | <a href="/test/{{ article.id }}">modifier</a></p> 
+                {{ article.fav}}     | 
+                {% if article.sender == userId %}
+                    <a href="/create-article/{{ article.id }}">modifier</a>
+                {% else %} 
+                <a href="{{ path('app_add_to_favorite', {'articleid': article.id }) }}">Favoris</a>
+                {% endif %} 
+            </p> 
         </div>    
     {% endfor %}
 </div>
