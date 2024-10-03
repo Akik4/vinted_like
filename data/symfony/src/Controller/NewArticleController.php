@@ -37,7 +37,7 @@ class NewArticleController extends AbstractController
     {
         
         if(!$article = $articleService->getFormArticle($id)){
-            return $this->redirectToRoute('app_article_creation', ['id' => 0]);
+            return $this->redirectToRoute('app_article_creation', ['id' => 0]); 
         }
         
         $form = $this->createForm(ArticleFormType::class, $article);
