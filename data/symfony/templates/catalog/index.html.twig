@@ -9,14 +9,16 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello ✅</h1>
-
     {% for article in articles %}
         <div>
                 <p>{{ article.name}} |
                 {{ article.price}} |
                 {{ article.content}} |
-                {{ article.fav}} | <a href="/create-article/{{ article.id }}">modifier</a></p> 
+                {{ article.fav}} | 
+            {% if article.sender == userId %}
+                <a href="/create-article/{{ article.id }}">modifier</a>
+            {% endif %}
+            </p> 
         </div>    
     {% endfor %}
 </div>

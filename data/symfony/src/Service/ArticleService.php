@@ -27,6 +27,7 @@ class ArticleService{
                     'price' => $article->getPrice(),
                     'fav' => $article->getFav(),
                     'content' => $article->getContent(),
+                    'sender' => $article->getSeller()->getId()
                 ];
             }
         }
@@ -59,7 +60,7 @@ class ArticleService{
             } else {
                 $this->entityManager->remove($favoris);
                 $task->setFav($task->getFav() - 1);
-                $this->entityManager->persist($task);
+                $this->entityManager->persist($task);   
             }
             $this->entityManager->flush();
     }

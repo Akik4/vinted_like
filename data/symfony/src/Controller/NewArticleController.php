@@ -31,13 +31,7 @@ class NewArticleController extends AbstractController
         $article = $articleService->getFormArticle($id);
         
         $form = $this->createForm(ArticleFormType::class, $article);
-        if($user->getId() != $article->getSeller()->getId()){
-            $form->remove('save');
-            $form->remove('delete');
-        } else {
-            $form->remove('favoris');
-            $form->remove('buy');
-        }
+        
         $form->handleRequest($request);
 
         if($articleService->handleRequest($form, $user)){
