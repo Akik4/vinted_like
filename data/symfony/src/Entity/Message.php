@@ -28,6 +28,9 @@ class Message
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user2 = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $datetime = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +80,18 @@ class Message
     public function setUser2(?User $user2): static
     {
         $this->user2 = $user2;
+
+        return $this;
+    }
+
+    public function getDatetime(): ?\DateTimeInterface
+    {
+        return $this->datetime;
+    }
+
+    public function setDatetime(\DateTimeInterface $datetime): static
+    {
+        $this->datetime = $datetime;
 
         return $this;
     }

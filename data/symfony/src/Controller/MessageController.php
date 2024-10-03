@@ -18,7 +18,7 @@ class MessageController extends AbstractController
 {
     #[Route('/message', name: 'app_message_home')]
     public function home_message(Request $request, EntityManagerInterface $entityManager, UserInterface $user): Response
-    { 
+    {
         $conversations = $entityManager->getRepository(Message::class)->findConversations($user->getID())->getResult();
 
         return $this->render('message/home.html.twig', [
@@ -28,37 +28,46 @@ class MessageController extends AbstractController
     }
 
     #[Route('/message/{id}', name: 'app_message')]
-    public function index(String $id ,Request $request, EntityManagerInterface $entityManager, UserInterface $user): Response
+    public function index(String $id, Request $request, EntityManagerInterface $entityManager, UserInterface $user): Response
     { //String addition
         $form = $this->createFormBuilder(null)
-        ->add('message', TextType::class)
-        ->add('send', SubmitType::class)
-        ->getForm();
-        
+            ->add('Message', TextType::class, [
+                'attr' => [
+                    'placeholder' => 'Votre message...'
+                ],
+                'row_attr' => [
+                    'class' => 'form-floating',
+                ],
+            ])
+            ->add('send', SubmitType::class)
+            ->getForm();
+
         $form->handleRequest($request);
         $convID = $user->getId() > $id ? $id . $user->getId() : $user->getId() . $id;
         $messages = $entityManager->getRepository(Message::class)->findMessages($convID)->getResult();
 
-        if($form->get('send')->isClicked()){
+        if ($form->get('send')->isClicked()) {
             $message = new Message();
 
             $message->setContent($form->getData()['message']);
             $message->setUserID($user);
             $message->setUser2($entityManager->getRepository(User::class)->find($id));
-            $convID = $user->getId() > $id ? $id. $user->getId() : $user->getId(). $id;
+            $convID = $user->getId() > $id ? $id . $user->getId() : $user->getId() . $id;
             $message->setConversationId($convID);
 
-            $entityManager->persist($message);            
+            //date message
+
+            $entityManager->persist($message);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_message', ['id' => $id]);
         }
-        
-        
+
+
         return $this->render('message/index.html.twig', [
             'controller_name' => 'MessageController',
             'form' => $form,
-            'messages' => $messages
+            'messages' => $messages,
         ]);
     }
 }
