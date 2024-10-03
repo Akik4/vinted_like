@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messagerie{% endblock %}
+
+{% block body %}
+
+{% for conversation in conversations_id %}
+<p>
+    {% if conversation.UserId.getId == userid %}
+        <p>{{ conversation.user2.email }} <a href="{{ path ('app_message', {'id' : conversation.user2.getId}) }}">Discussion</a></p>
+    {% endif %}
+</p>
+
+{% endfor %}
+
+{% endblock %}
