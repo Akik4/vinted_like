@@ -12,11 +12,13 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(Request $request): Response
     {
-        $kiwi = $request->query->get('value');
-        return $this->render('home/index.html.twig', [
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        /** @var \App\Entity\User $user */
+        $user = $this->getUser();
+        return $this->render('vinted_home/index.html.twig', [
             'controller_name' => 'HomeController',
-            'kiwi' => $kiwi
+            'id' => $user->getId(),
         ]);
     }
-
 }
