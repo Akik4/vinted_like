@@ -1,16 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Messagerie{% endblock %}
+{% block title %}Messagerie
+{% endblock %}
 
 {% block body %}
+	<section class="section-conversation">
+		<div class="container-fluid container-conversations ">
+			{% for conversation in conversations_id %}
 
-{% for conversation in conversations_id %}
-<p>
-    {% if conversation.UserId.getId == userid %}
-        <p>{{ conversation.user2.email }} <a href="{{ path ('app_message', {'id' : conversation.user2.getId}) }}">Discussion</a></p>
-    {% endif %}
-</p>
+				<p>
+					{% if conversation.UserId.getId == userid %}
+						<p>{{ conversation.user2.email }}
+							<a href="{{ path ('app_message', {'id' : conversation.user2.getId}) }}">Discussion</a>
+						</p>
+					{% endif %}
+				</p>
 
-{% endfor %}
+			{% endfor %}
+
+		</div>
+	</section>
+
 
 {% endblock %}
