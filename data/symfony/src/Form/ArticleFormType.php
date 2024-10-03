@@ -20,6 +20,7 @@ class ArticleFormType extends AbstractType
             ->add('name', TextType::class)
             ->add('price', IntegerType::class)
             ->add('content', TextareaType::class, ['required'=>false])   
+            ->add('imgUrl', TextareaType::class, ['required'=>false])   
             ->add('save', SubmitType::class, ['label' => 'Mettre en vente'])    
             ->add('delete', SubmitType::class, ['label' => 'supprimer'])
             ;

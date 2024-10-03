@@ -28,7 +28,8 @@ class ArticleService{
                     'fav'       => $article->getFav(),
                     'content'   => $article->getContent(),
                     'sender'    => $article->getSeller()->getId(),
-                    'id'        => $article->getId()
+                    'id'        => $article->getId(),
+                    'img_url'   => $article->getImgUrl()
                 ];
             }
         }
