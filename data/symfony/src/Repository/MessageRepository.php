@@ -58,6 +58,7 @@ class MessageRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('f')
             ->andWhere('f.conversation_id = :val')
             ->setParameter('val', $convId)
+            ->orderBy('f.datetime', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
         ;
