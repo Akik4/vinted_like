@@ -32,7 +32,7 @@ class MessageService {
             $message->setUserID($user);
             $message->setUser2($this->entityManager->getRepository(User::class)->find($id));
             $message->setConversationId($convID);
-            $this->notify(sprintf('%s vous à envoyé un message', $this->entityManager->getRepository(User::class)->find($id)));
+            $this->notify->SendNotificationTo(sprintf('%s vous à envoyé un message', $user->GetUsername()), $this->entityManager->getRepository(User::class)->find($id)); 
 
             $this->entityManager->persist($message);
             $this->entityManager->flush();

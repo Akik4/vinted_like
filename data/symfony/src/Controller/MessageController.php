@@ -28,7 +28,8 @@ class MessageController extends AbstractController
 
         return $this->render('message/home.html.twig', [
             'userid' => $user->getId(),
-            'conversations_id' => $conversationInfo
+            'conversations_id' => $conversationInfo,
+            'id' => $user
         ]);
     }
 
@@ -61,7 +62,8 @@ class MessageController extends AbstractController
             'controller_name' => 'MessageController',
             'form' => $form,
             'messages' => $messages,
-            'user' => $user->GetId()
+            'user' => $user->GetId(),
+            'id' => $user
         ]);
     }
 }

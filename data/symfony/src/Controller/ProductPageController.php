@@ -18,6 +18,7 @@ class ProductPageController extends AbstractController
         return $this->render('product_page/index.html.twig', [
             'controller_name' => 'ProductPageController',
             'article' => $articleService->getFormArticle($id),
+            'id' => $user
         ]);
     }
 }
