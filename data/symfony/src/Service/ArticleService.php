@@ -29,7 +29,8 @@ class ArticleService{
                     'content'   => $article->getContent(),
                     'sender'    => $article->getSeller()->getId(),
                     'id'        => $article->getId(),
-                    'img_url'   => $article->getImgUrl()
+                    'img_url'   => $article->getImgUrl(),
+                    'category'   => $article->getCategory()
                 ];
             }
         }

@@ -57,8 +57,20 @@
 	</style>
 
 	<div class="example-wrapper">
-		{% for article in articles %}
 
+		<div class="dropdown">
+			<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+			  Filtre
+			</button>
+			<ul class="dropdown-menu">
+			  <li><a class="dropdown-item" href="{{path('app_filter', {'filtre': 'Electronique'})}}">Electronique</a></li>
+			  <li><a class="dropdown-item" href="{{path('app_filter', {'filtre': 'Vetement'})}}">Vetêment</a></li>
+			  <li><a class="dropdown-item" href="{{path('app_filter', {'filtre': 'Autre'})}}">Autre</a></li>
+			</ul>
+		</div>
+		{% for article in articles %}
+		{% if filter is defined and filter != article.category %}
+		{% else %}
 			<div class="card p-3 m-3" style="max-width: 600px; width:450px">
 				<div class="row g-0">
 					<div class="col-md-4">
@@ -88,7 +100,7 @@
 									{% endif %}
 
 							</div>
-							<div style=" display: -webkit-box;
+							<div style=" display: -webkit-box;"
 																																																																																																																																																    -webkit-line-clamp: 3;
 									<p class="card-text">favoris: {{ article.fav}}</p>
 								</div>
@@ -99,6 +111,7 @@
 						</div>
 					</div>
 				</div>
+			{% endif %}
 			{% endfor %}
 			{# <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button> #}
 
