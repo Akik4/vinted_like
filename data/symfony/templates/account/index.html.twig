@@ -7,9 +7,7 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
-            display: flex;
             justify-content: center;
-            padding-top: 50px;
         }
 
         .profile-container {
@@ -81,22 +79,11 @@
         <div class="profile-info">
             <img src="" alt=""/>
 
-            <h2>tompreestbeau</h2>
-            <p>Pas encore d'évaluation</p>
-            <div class="details">
-                <div>
-                    <span>France</span>
-                </div>
-                <div>
-                    <span>Google</span>
-                </div>
-                <div>
-                    <span>Email</span>
-                </div>
-            </div>
+            <h2>{{ user.username }}</h2>
+
         </div>
-        <button>
+        <a class="btn btn-primary" href="{{path('app_account_gestion')}}">
             Modifier mon profil
-        </button>
+        </a>
     </div>
 {% endblock %}

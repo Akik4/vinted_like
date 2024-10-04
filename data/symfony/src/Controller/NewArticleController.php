@@ -19,7 +19,7 @@ use App\Repository\FavorisRepository;
 
 class NewArticleController extends AbstractController
 {
-    #[Route('/create-article')]
+    #[Route('/create-article', 'app_articlec')]
     public function emptyRedirect()
     {
         return $this->redirectToRoute('app_article_creation', ["id" => 0]);
@@ -30,6 +30,15 @@ class NewArticleController extends AbstractController
     {
         $article = $articleService->getFormArticle($articleid);
         $articleService->updateFavorisState($article, $user);
+        return $this->redirectToRoute('app_catalog');
+    }
+
+    #[Route('/buy/{article}', name: "app_buy")]
+    public function buyArticle(int $article, ArticleService $articleService, UserInterface $user)
+    {
+        $article = $articleService->getFormArticle($article);
+        $articleService->buyArticle($article, $user);
+
         return $this->redirectToRoute('app_catalog');
     }
 

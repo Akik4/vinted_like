@@ -1,112 +1,18 @@
-{% extends 'base.html.twig' %}
+    {% extends 'base.html.twig' %}
 
-{% block title %}Hello AccountGestionController!{% endblock %}
+    {% block title %}Hello AccountGestionController!{% endblock %}
 
-{% block body %}
- <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .profile-container {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            width: 400px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .profile-container h2 {
-            margin-bottom: 20px;
-            font-size: 1.2em;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input[type="text"], select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .profile-photo {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .profile-photo img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-        .toggle-switch {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-        }
-        .toggle-switch input {
-            margin-right: 10px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-    <div class="profile-container">
-        <h2>Configurer votre profil</h2>
-        <div class="form-group profile-photo">
-            <img src="" alt="Photo de profil">
-            <button>Choisir une photo</button>
-        </div>
+    {% block body %}
+    <div>
 
-        <div class="form-group">
-            <label for="about">À propos de toi</label>
-            <input type="text" id="about" placeholder="Présente-toi aux autres membres">
-        </div>
+        <a class="btn btn-primary" href="{{path('app_articlec')}}">Publier un article</a>
 
-        <div class="form-group">
-            <label for="country">Pays</label>
-            <select id="country">
-                <option value="france">France</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="city">Ville</label>
-            <select id="city">
-                <option value="">Sélectionne la ville</option>
-            </select>
-        </div>
-
-        <div class="form-group toggle-switch">
-            <input type="checkbox" id="display-city" checked>
-            <label for="display-city">Afficher la ville dans le profil</label>
-        </div>
-
-        <div class="form-group">
-            <label for="language">Langue</label>
-            <select id="language">
-                <option value="francais">Français (French)</option>
-            </select>
-        </div>
+        {% for article in articles %}
+            {% if article.isbuy %}
+                <p style='color:red'>{{ article.name}}</p>
+            {% else %}
+                <p>{{ article.name}}</p>
+            {% endif %}
+        {% endfor %}
     </div>
-{% endblock %}
+    {% endblock %}
