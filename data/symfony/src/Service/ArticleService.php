@@ -5,13 +5,15 @@ namespace App\Service;
 use Doctrine\ORM\EntityManagerInterface;
 
 use App\Entity\Article;
+use App\Service\NotifyService;
 use App\Repository\FavorisRepository;
 use App\Entity\Favoris;
 
 class ArticleService{
-    function __construct(EntityManagerInterface $entityManager, FavorisRepository $favorisRepo) {
+    function __construct(EntityManagerInterface $entityManager, FavorisRepository $favorisRepo, NotifyService $notify) {
         $this->entityManager = $entityManager;
         $this->favorisRepo = $favorisRepo;
+        $this->notify = $notify;
     }
 
     function getAllArticlesFromDB(){
@@ -62,10 +64,14 @@ class ArticleService{
                 $this->entityManager->persist($favoris);
                 $task->setFav($task->getFav() + 1);
                 $this->entityManager->persist($task);
+            $this->notify->SendNotificationTo(sprintf('%s à ajouter votre article : %s à ses favoris', $user->GetUsername(), $task->GetName()), $task->GetSeller());
+
             } else {
                 $this->entityManager->remove($favoris);
                 $task->setFav($task->getFav() - 1);
                 $this->entityManager->persist($task);   
+                $this->notify->SendNotificationTo(sprintf('%s à retirer votre article : %s de ses favoris', $user->GetUsername(), $task->GetName()), $task->GetSeller());
+
             }
             $this->entityManager->flush();
     }
@@ -73,6 +79,8 @@ class ArticleService{
     function buyArticle($task, $user){
         $task->setBuy(true);
         $task->setBuyer($user);
+        $this->notify->SendNotificationTo(sprintf('%s à acheté votre article : %s', $user->GetUsername(), $task->GetName()), $task->GetSeller());
+
         $this->entityManager->persist($task);            
         $this->entityManager->flush();
     }

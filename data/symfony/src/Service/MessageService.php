@@ -7,11 +7,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Controller\MessageController;
 use App\Entity\Message;
 use App\Entity\User;
+use App\Service\NotifyService;
+
 
 class MessageService {
     
-    function __construct(EntityManagerInterface $entityManager){
+    function __construct(EntityManagerInterface $entityManager, NotifyService $notify){
         $this->entityManager = $entityManager;
+        $this->notify = $notify;
     }
 
     function getMessages($id, $user) : Array {
@@ -29,6 +32,7 @@ class MessageService {
             $message->setUserID($user);
             $message->setUser2($this->entityManager->getRepository(User::class)->find($id));
             $message->setConversationId($convID);
+            $this->notify(sprintf('%s vous à envoyé un message', $this->entityManager->getRepository(User::class)->find($id)));
 
             $this->entityManager->persist($message);
             $this->entityManager->flush();
