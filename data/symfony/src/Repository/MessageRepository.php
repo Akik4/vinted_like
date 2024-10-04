@@ -53,13 +53,25 @@ class MessageRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findConversationInfo($convId): ?Query
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.conversation_id = :val')
+            ->setParameter('val', $convId)
+            ->setMaxResults(1)
+            ->getQuery()
+        ;
+    }
+
     public function findConversations($userid): ?Query
     {
         return $this->createQueryBuilder('f')
+            ->select('f.conversation_id')
             ->Where('f.User = :val')
             ->orWhere('f.user2 = :val')
             ->join(User::class, 'u')
             ->setParameter('val', $userid)
+            ->distinct()
             ->setMaxResults(10)
             ->getQuery()
         ;

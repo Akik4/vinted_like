@@ -22,9 +22,13 @@ class MessageController extends AbstractController
     {
         $conversations = $entityManager->getRepository(Message::class)->findConversations($user->getID())->getResult();
 
+        foreach ($conversations as $key => $value) {
+            $conversationInfo[] = $entityManager->getRepository(Message::class)->findConversationInfo($value['conversation_id'])->getResult();
+        }
+
         return $this->render('message/home.html.twig', [
             'userid' => $user->getId(),
-            'conversations_id' => $conversations            
+            'conversations_id' => $conversationInfo            
         ]);
     }
 

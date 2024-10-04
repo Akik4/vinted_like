@@ -9,9 +9,9 @@
 			{% for conversation in conversations_id %}
 
 				<p>
-					{% if conversation.UserID.getId == userid %}
-						<p>{{ conversation.user2.email }}
-							<a href="{{ path ('app_message', {'id' : conversation.user2.getId}) }}">Discussion</a>
+					{% if conversation[0].UserID.getId == userid %}
+						<p>{{ conversation[0].user2.email }}
+							<a href="{{ path ('app_message', {'id' : conversation[0].user2.getId}) }}">Discussion</a>
 						</p>
 					{% endif %}
 				</p>
