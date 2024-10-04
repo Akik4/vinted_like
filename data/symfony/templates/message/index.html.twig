@@ -21,22 +21,37 @@
 	<section class="container-messages w-100">
 		<div class="container-fluid w-100 container-messages bg-light d-flex flex-column justify-content-between">
 
-			<div style="overflow-y: scroll; padding-bottom:20px">
+			<div class="row" style="overflow-y: scroll; padding-bottom:20px">
 
 				{% for message in messages %}
-					<div class="d-flex">
-						<p>{{ message.userId.email }}</p>
-						<p>: :
-							{{ message.datetime |date('H:i') }}</p>
 
-					</div>
 
+					{% if message.userId.id == user %}
+					<div class="float-end">
+						<div class="d-flex">
+							<span>{{ message.datetime |date('H:i') }}</span>
+							<span class="ms-3">{{ message.userId.username }} :</span>
+	
+						</div>
 
 					<div class="bg-info border rounded px-2 pt-3" style="width:max-content; max-width:100%; ">
-						<p class="text-light" style="
-																													  overflow-wrap: break-word;">{{ message.content }}</p>
+						<p class="text-light" style="overflow-wrap: break-word;">{{ message.content }}</p>
 
 					</div>
+					{% else %}
+					<div class="row">
+						<div class="float-end">
+							<div class="bg-success border rounded px-2 pt-3 float-end" style="width:max-content; max-width:100%; ">
+								<p class="text-light" style="overflow-wrap: break-word;">{{ message.content }}</p>
+							</div>
+								<div class="d-flex float-end">
+									<span>{{ message.datetime |date('H:i') }}</span>
+									<span class="ms-3">{{ message.userId.username }} :</span>
+								</div>
+					</div>
+					{% endif %}
+				</div>
+
 				{% endfor %}
 			</div>
 

@@ -61,6 +61,7 @@ class MessageController extends AbstractController
             'controller_name' => 'MessageController',
             'form' => $form,
             'messages' => $messages,
+            'user' => $user->GetId()
         ]);
     }
 }

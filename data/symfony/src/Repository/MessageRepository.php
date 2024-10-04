@@ -74,6 +74,7 @@ class MessageRepository extends ServiceEntityRepository
             ->distinct()
             ->setMaxResults(10)
             ->getQuery()
+            // TODO sort by recent date
         ;
     }
 }
