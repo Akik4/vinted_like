@@ -28,14 +28,14 @@ class MessageController extends AbstractController
 
         return $this->render('message/home.html.twig', [
             'userid' => $user->getId(),
-            'conversations_id' => $conversationInfo            
+            'conversations_id' => $conversationInfo
         ]);
     }
 
     #[Route('/message/{id}', name: 'app_message')]
-    public function index(String $id, Request $request,UserInterface $user, MessageService $messageService): Response
+    public function index(String $id, Request $request, UserInterface $user, MessageService $messageService): Response
     { //String addition
-        
+
         $form = $this->createFormBuilder(null)
             ->add('message', TextType::class, [
                 'attr' => [
@@ -52,8 +52,8 @@ class MessageController extends AbstractController
         $messages = $messageService->getMessages($id, $user);
 
         $form->handleRequest($request);
-        
-        if($messageService->handleMessage($form, $id, $user)){
+
+        if ($messageService->handleMessage($form, $id, $user)) {
             return $this->redirectToRoute('app_message', ['id' => $id]);
         }
 

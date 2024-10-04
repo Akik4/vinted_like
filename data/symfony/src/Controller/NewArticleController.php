@@ -30,7 +30,7 @@ class NewArticleController extends AbstractController
     {
         $article = $articleService->getFormArticle($articleid);
         $articleService->updateFavorisState($article, $user);
-        return $this->redirectToRoute('app_catalog');
+        return $this->redirectToRoute('app_catalog', ['id' => $user->getId()]);
     }
 
 
@@ -52,6 +52,7 @@ class NewArticleController extends AbstractController
 
         return $this->render('test/new.html.twig', [
             'form' => $form,
+            'id' => $user->getId()
         ]);
     }
 }

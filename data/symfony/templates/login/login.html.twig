@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<div class="d-flex justify-content-center align-items-center" style="height: 85vh">
+	<div class="d-flex justify-content-center align-items-center" style="height: 100vh">
 
 		<form method="post" class="w-30">
 			{% if error %}
@@ -31,18 +31,18 @@
 			type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 			{#
-																																																																																	            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-																																																																																	            See https://symfony.com/doc/current/security/remember_me.html
-																																																																																	
-																																																																																	            <div class="checkbox mb-3">
-																																																																																	                <input type="checkbox" name="_remember_me" id="_remember_me">
-																																																																																	                <label for="_remember_me">Remember me</label>
-																																																																																	            </div>
-																																																																																	        #}
+																																																																																									            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+																																																																																									            See https://symfony.com/doc/current/security/remember_me.html
+																																																																																									
+																																																																																									            <div class="checkbox mb-3">
+																																																																																									                <input type="checkbox" name="_remember_me" id="_remember_me">
+																																																																																									                <label for="_remember_me">Remember me</label>
+																																																																																									            </div>
+																																																																																									        #}
 
 			<div id="emailHelp" class="form-text mb-4 ">
 				<a href="/reset-password
-																																								" class="link-underline link-underline-opacity-0 link-opacity-50">Forgot Password</a>
+																																																						" class="link-underline link-underline-opacity-0 link-opacity-50">Forgot Password</a>
 
 
 			</div>
@@ -63,4 +63,5 @@
 
 		</form>
 	</div>
+
 {% endblock %}
