@@ -21,14 +21,12 @@
 				</button>
 				<ul class="dropdown-menu">
 					<li>
-						<a class="dropdown-item" href="#">Profile</a>
+						<a class="dropdown-item" href="{{path('app_account')}}">Profile</a>
+
 					</li>
 					<li>
 						{% if app.user %}
-							<div
-								class="bg-danger">
-								{# You are logged in as
-																																																																																																																																																								{{ app.user.userIdentifier }}, #}
+							<div class="bg-danger">
 								<a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
 
 							</div>
@@ -87,37 +85,37 @@
 										</a>
 									{% endif %}
 
-							</div>
-							<div style=" display: -webkit-box;
-																																																																																																																																																    -webkit-line-clamp: 3;
-									<p class="card-text">favoris: {{ article.fav}}</p>
 								</div>
-								<p class="card-text">
-									<strong class="text-body-secondary">{{ article.price}}$</strong>
-								</p>
+								<div style=" display: -webkit-box;
+																																																																																																																																																																		    -webkit-line-clamp: 3;
+																											<p class=" card-text">favoris:
+									{{ article.fav}}</p>
 							</div>
+							<p class="card-text">
+								<strong class="text-body-secondary">{{ article.price}}$</strong>
+							</p>
 						</div>
 					</div>
 				</div>
-			{% endfor %}
-			{# <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button> #}
-
-			<div class="toast-container position-fixed bottom-0 end-0 p-3">
-				<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-					<div class="toast-header">
-						<img src="..." class="rounded me-2" alt="...">
-						<strong class="me-auto">Bootstrap</strong>
-						<small>11 mins ago</small>
-						<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-					</div>
-					<div class="toast-body">
-						Hello, world! This is a toast message.
-					</div>
-				</a>
-
 			</div>
+		{% endfor %}
+		{# <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button> #}
+
+		<div class="toast-container position-fixed bottom-0 end-0 p-3">
+			<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+				<div class="toast-header">
+					<img src="..." class="rounded me-2" alt="...">
+					<strong class="me-auto">Bootstrap</strong>
+					<small>11 mins ago</small>
+					<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+				</div>
+				<div class="toast-body">
+					Hello, world! This is a toast message.
+				</div>
+			</a>
+
 		</div>
-
-
 	</div>
-{% endblock %}
+
+
+</div>{% endblock %}

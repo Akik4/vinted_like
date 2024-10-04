@@ -16,14 +16,15 @@
 				</button>
 				<ul class="dropdown-menu">
 					<li>
-						<a class="dropdown-item" href="#">Profile</a>
+						<a class="dropdown-item" href="{{path('app_account')}}">Profile</a>
+
 					</li>
 					<li>
 						{% if app.user %}
 							<div
 								class="bg-danger">
 								{# You are logged in as
-																																																																																																																																																{{ app.user.userIdentifier }}, #}
+																																																																																																																																																								{{ app.user.userIdentifier }}, #}
 								<a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
 
 							</div>
