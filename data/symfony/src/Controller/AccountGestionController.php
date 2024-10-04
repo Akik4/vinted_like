@@ -16,8 +16,8 @@ class AccountGestionController extends AbstractController
     public function index(UserInterface $user): Response
     {
         return $this->render('account_gestion/index.html.twig', [
-            'controller_name' => 'AccountGestionController',
             'articles' => $user->getArticles(),               
+            'buyed_articles' => $user->getArticlesBuyed(),               
         ]);
     }
 }

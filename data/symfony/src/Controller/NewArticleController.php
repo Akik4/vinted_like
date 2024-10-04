@@ -8,6 +8,9 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Pontedilana\PhpWeasyPrint\Pdf;
+use Pontedilana\WeasyprintBundle\WeasyPrint\Response\PdfResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 use App\Entity\Article;
 use App\Form\ArticleFormType;
@@ -15,6 +18,7 @@ use App\Service\ArticleService;
 use App\Service\NotifyService;
 use App\Entity\Favoris;
 use App\Repository\FavorisRepository;
+use Twig\Environment;
 
 
 
@@ -42,6 +46,27 @@ class NewArticleController extends AbstractController
         $notify->SendNotificationTo(sprintf('%s à acheté votre article : %s', $user->GetUsername(), $article->GetName()), $article->GetSeller());
 
         return $this->redirectToRoute('app_catalog');
+    }
+
+    #[Route('/export', name: "app_export")]
+    public function ExportToPDF(ArticleService $articleService, UserInterface $user, Pdf $weasyPrint,): Response
+    {
+        $html = $this->render('account_gestion/index.html.twig', [
+            'articles' => $user->getArticles(),               
+            'buyed_articles' => $user->getArticlesBuyed(),               
+        ]);
+        $pdfContent = $weasyPrint->getOutputFromHtml($html);
+
+        return new PdfResponse(
+            content: $pdfContent,
+            fileName: 'file.pdf',
+            contentType: 'application/pdf',
+            contentDisposition: ResponseHeaderBag::DISPOSITION_INLINE,
+            // or download the file instead of displaying it in the browser with
+            // contentDisposition: ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            status: 200,
+            headers: []
+        );   
     }
 
 

@@ -40,6 +40,9 @@
             "tests/bootstrap.php"
         ]
     },
+    "pontedilana/weasyprint-bundle": {
+        "version": "2.2.0"
+    },
     "symfony/asset-mapper": {
         "version": "7.1",
         "recipe": {
