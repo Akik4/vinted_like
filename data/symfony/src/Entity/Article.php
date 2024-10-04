@@ -44,6 +44,9 @@ class Article
     #[ORM\ManyToOne(inversedBy: 'articles_buyed')]
     private ?User $buyer = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $imgUrl = null;
+
     public function __construct()
     {
         $this->favoris = new ArrayCollection();
@@ -164,6 +167,18 @@ class Article
     public function setBuyer(?User $buyer): static
     {
         $this->buyer = $buyer;
+
+        return $this;
+    }
+
+    public function getImgUrl(): ?string
+    {
+        return $this->imgUrl;
+    }
+
+    public function setImgUrl(?string $imgUrl): static
+    {
+        $this->imgUrl = $imgUrl;
 
         return $this;
     }

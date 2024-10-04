@@ -20,12 +20,14 @@ use App\Repository\FavorisRepository;
 class NewArticleController extends AbstractController
 {
     #[Route('/create-article')]
-    public function emptyRedirect() {
-        return $this->redirectToRoute('app_article_creation', ["id"=> 0]);
+    public function emptyRedirect()
+    {
+        return $this->redirectToRoute('app_article_creation', ["id" => 0]);
     }
 
     #[Route('/addtofavorite/{articleid}', name: "app_add_to_favorite")]
-    public function addToFavorite(int $articleid, ArticleService $articleService, UserInterface $user) {
+    public function addToFavorite(int $articleid, ArticleService $articleService, UserInterface $user)
+    {
         $article = $articleService->getFormArticle($articleid);
         $articleService->updateFavorisState($article, $user);
         return $this->redirectToRoute('app_catalog');
@@ -33,18 +35,18 @@ class NewArticleController extends AbstractController
 
 
     #[Route('/create-article/{id}', name: 'app_article_creation')]
-    public function index(String $id,Request $request, UserInterface $user, ArticleService $articleService): Response
+    public function index(String $id, Request $request, UserInterface $user, ArticleService $articleService): Response
     {
-        
-        if(!$article = $articleService->getFormArticle($id)){
+
+        if (!$article = $articleService->getFormArticle($id)) {
             return $this->redirectToRoute('app_article_creation', ['id' => 0]);
         }
-        
+
         $form = $this->createForm(ArticleFormType::class, $article);
 
         $form->handleRequest($request);
 
-        if($articleService->handleRequest($form, $user)){
+        if ($articleService->handleRequest($form, $user)) {
             return $this->redirectToRoute('app_catalog');
         }
 
