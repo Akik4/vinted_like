@@ -9,7 +9,7 @@
 			{% for conversation in conversations_id %}
 
 				<p>
-					{% if conversation.UserId.getId == userid %}
+					{% if conversation.UserID.getId == userid %}
 						<p>{{ conversation.user2.email }}
 							<a href="{{ path ('app_message', {'id' : conversation.user2.getId}) }}">Discussion</a>
 						</p>
