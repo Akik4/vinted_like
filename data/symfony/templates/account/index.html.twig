@@ -86,4 +86,10 @@
             Modifier mon profil
         </a>
     </div>
+    <div>
+        <h1>Notifications :</h1>
+        {% for notif in notifications %}
+            <p>{{ notif.content }}</p>
+        {% endfor %}
+    </div>
 {% endblock %}

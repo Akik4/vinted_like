@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use App\Entity\Article;
 use App\Form\ArticleFormType;
 use App\Service\ArticleService;
+use App\Service\NotifyService;
 use App\Entity\Favoris;
 use App\Repository\FavorisRepository;
 
@@ -34,10 +35,11 @@ class NewArticleController extends AbstractController
     }
 
     #[Route('/buy/{article}', name: "app_buy")]
-    public function buyArticle(int $article, ArticleService $articleService, UserInterface $user)
+    public function buyArticle(int $article, ArticleService $articleService, UserInterface $user, NotifyService $notify)
     {
         $article = $articleService->getFormArticle($article);
         $articleService->buyArticle($article, $user);
+        $notify->SendNotificationTo(sprintf('%s à acheté votre article : %s', $user->GetUsername(), $article->GetName()), $article->GetSeller());
 
         return $this->redirectToRoute('app_catalog');
     }
