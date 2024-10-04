@@ -24,7 +24,6 @@ class ChangePasswordFormType extends AbstractType
                         'autocomplete' => 'new-password',
                     ],
                 ],
-                'toggle' => true,
                 'first_options' => [
                     'constraints' => [
                         new NotBlank([
