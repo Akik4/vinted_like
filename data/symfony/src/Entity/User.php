@@ -71,6 +71,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'user2', orphanRemoval: true)]
     private Collection $messageReceived;
 
+    /**
+     * @var Collection<int, Notify>
+     */
+    #[ORM\OneToMany(targetEntity: Notify::class, mappedBy: 'receiver', orphanRemoval: true)]
+    private Collection $notifies;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -78,6 +84,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->favoris = new ArrayCollection();
         $this->user = new ArrayCollection();
         $this->messageReceived = new ArrayCollection();
+        $this->notifies = new ArrayCollection();
     }
 
     // #[ORM\Column]
@@ -326,6 +333,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($messageReceived->getUser2() === $this) {
                 $messageReceived->setUser2(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notify>
+     */
+    public function getNotifies(): Collection
+    {
+        return $this->notifies;
+    }
+
+    public function addNotify(Notify $notify): static
+    {
+        if (!$this->notifies->contains($notify)) {
+            $this->notifies->add($notify);
+            $notify->setReceiver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotify(Notify $notify): static
+    {
+        if ($this->notifies->removeElement($notify)) {
+            // set the owning side to null (unless already changed)
+            if ($notify->getReceiver() === $this) {
+                $notify->setReceiver(null);
             }
         }
 

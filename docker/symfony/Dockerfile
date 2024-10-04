@@ -11,7 +11,7 @@ run apt-get install curl dos2unix -y
 run dos2unix /start.sh
 run apt-get install php php-curl php-mysql -y
 run apt-get install php-common libapache2-mod-php php-cli php-xml php-zip unzip -y
-
+run apt install weasyprint -y
 copy ./composer-setup.php /data/.
 RUN chmod +x ./composer-setup.php
 run php /data/composer-setup.php

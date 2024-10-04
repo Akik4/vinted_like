@@ -8,18 +8,23 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Pontedilana\PhpWeasyPrint\Pdf;
+use Pontedilana\WeasyprintBundle\WeasyPrint\Response\PdfResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 use App\Entity\Article;
 use App\Form\ArticleFormType;
 use App\Service\ArticleService;
+use App\Service\NotifyService;
 use App\Entity\Favoris;
 use App\Repository\FavorisRepository;
+use Twig\Environment;
 
 
 
 class NewArticleController extends AbstractController
 {
-    #[Route('/create-article')]
+    #[Route('/create-article', 'app_articlec')]
     public function emptyRedirect()
     {
         return $this->redirectToRoute('app_article_creation', ["id" => 0]);
@@ -31,6 +36,37 @@ class NewArticleController extends AbstractController
         $article = $articleService->getFormArticle($articleid);
         $articleService->updateFavorisState($article, $user);
         return $this->redirectToRoute('app_catalog', ['id' => $user->getId()]);
+    }
+
+    #[Route('/buy/{article}', name: "app_buy")]
+    public function buyArticle(int $article, ArticleService $articleService, UserInterface $user, NotifyService $notify)
+    {
+        $article = $articleService->getFormArticle($article);
+        $articleService->buyArticle($article, $user);
+        $notify->SendNotificationTo(sprintf('%s à acheté votre article : %s', $user->GetUsername(), $article->GetName()), $article->GetSeller());
+
+        return $this->redirectToRoute('app_catalog');
+    }
+
+    #[Route('/export', name: "app_export")]
+    public function ExportToPDF(ArticleService $articleService, UserInterface $user, Pdf $weasyPrint,): Response
+    {
+        $html = $this->render('account_gestion/index.html.twig', [
+            'articles' => $user->getArticles(),               
+            'buyed_articles' => $user->getArticlesBuyed(),               
+        ]);
+        $pdfContent = $weasyPrint->getOutputFromHtml($html);
+
+        return new PdfResponse(
+            content: $pdfContent,
+            fileName: 'file.pdf',
+            contentType: 'application/pdf',
+            contentDisposition: ResponseHeaderBag::DISPOSITION_INLINE,
+            // or download the file instead of displaying it in the browser with
+            // contentDisposition: ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            status: 200,
+            headers: []
+        );   
     }
 
 
