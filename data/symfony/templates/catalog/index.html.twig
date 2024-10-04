@@ -55,8 +55,20 @@
 	</style>
 
 	<div class="example-wrapper">
-		{% for article in articles %}
 
+		<div class="dropdown">
+			<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+			  Filtre
+			</button>
+			<ul class="dropdown-menu">
+			  <li><a class="dropdown-item" href="{{path('app_filter', {'filtre': 'Electronique'})}}">Electronique</a></li>
+			  <li><a class="dropdown-item" href="{{path('app_filter', {'filtre': 'Vetement'})}}">Vetêment</a></li>
+			  <li><a class="dropdown-item" href="{{path('app_filter', {'filtre': 'Autre'})}}">Autre</a></li>
+			</ul>
+		</div>
+		{% for article in articles %}
+		{% if filter is defined and filter != article.category %}
+		{% else %}
 			<div class="card p-3 m-3" style="max-width: 600px; width:450px">
 				<div class="row g-0">
 					<div class="col-md-4">
@@ -85,6 +97,11 @@
 										</a>
 									{% endif %}
 
+							</div>
+							<div style=" display: -webkit-box;"
+																																																																																																																																																    -webkit-line-clamp: 3;
+									<p class="card-text">favoris: {{ article.fav}}</p>
+
 								</div>
 								<div style=" display: -webkit-box;
 																																																																																																																																																																		    -webkit-line-clamp: 3;
@@ -97,6 +114,22 @@
 						</div>
 					</div>
 				</div>
+			{% endif %}
+			{% endfor %}
+			{# <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button> #}
+
+			<div class="toast-container position-fixed bottom-0 end-0 p-3">
+				<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+					<div class="toast-header">
+						<img src="..." class="rounded me-2" alt="...">
+						<strong class="me-auto">Bootstrap</strong>
+						<small>11 mins ago</small>
+						<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+					</div>
+					<div class="toast-body">
+						Hello, world! This is a toast message.
+					</div>
+				</a>
 			</div>
 		{% endfor %}
 		{# <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button> #}

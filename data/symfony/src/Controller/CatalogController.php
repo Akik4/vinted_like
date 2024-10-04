@@ -19,4 +19,14 @@ class CatalogController extends AbstractController
             'userId' => $user->getId()
         ]);
     }
+    
+    #[Route('/catalog/{filtre}', name: 'app_filter')]
+    public function filter(ArticleService $articleDB, UserInterface $user, $filtre): Response
+    {
+        return $this->render('catalog/index.html.twig', [
+            'articles' => $articleDB->getAllArticlesFromDB(),
+            'userId' => $user->getId(),
+            'filter' => $filtre
+        ]);
+    }
 }
