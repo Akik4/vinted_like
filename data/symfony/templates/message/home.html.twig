@@ -7,15 +7,21 @@
 	<section class="section-conversation">
 		<div class="container-fluid container-conversations ">
 			{% for conversation in conversations_id %}
-
-				<p>
-					{% if conversation.UserId.getId == userid %}
-						<p>{{ conversation.user2.email }}
-							<a href="{{ path ('app_message', {'id' : conversation.user2.getId}) }}">Discussion</a>
-						</p>
-					{% endif %}
-				</p>
-
+				<div class="container bg-light border">
+					<p>
+						{% if conversation[0].UserID.getId == userid %}
+							<p>{{ conversation[0].user2.username }}
+								<a class="btn btn-primary" href="{{ path ('app_message', {'id' : conversation[0].user2.getId}) }}">Discussion</a>
+								<span>{{conversation[0].content}}</span>
+							</p>
+						{% else %}
+							<p>{{ conversation[0].UserId.username }}
+								<a class="btn btn-primary" href="{{ path ('app_message', {'id' : conversation[0].UserId.getId}) }}">Discussion</a>
+								<span>{{conversation[0].content}}</span>
+							</p>
+						{% endif %}
+					</p>
+				</div>
 			{% endfor %}
 
 		</div>

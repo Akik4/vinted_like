@@ -6,13 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 use App\Entity\Message;
 use App\Entity\User;
+use App\Service\MessageService;
 
 class MessageController extends AbstractController
 {
@@ -21,15 +22,20 @@ class MessageController extends AbstractController
     {
         $conversations = $entityManager->getRepository(Message::class)->findConversations($user->getID())->getResult();
 
+        foreach ($conversations as $key => $value) {
+            $conversationInfo[] = $entityManager->getRepository(Message::class)->findConversationInfo($value['conversation_id'])->getResult();
+        }
+
         return $this->render('message/home.html.twig', [
             'userid' => $user->getId(),
-            'conversations_id' => $conversations            
+            'conversations_id' => $conversationInfo            
         ]);
     }
 
     #[Route('/message/{id}', name: 'app_message')]
-    public function index(String $id, Request $request, EntityManagerInterface $entityManager, UserInterface $user): Response
+    public function index(String $id, Request $request,UserInterface $user, MessageService $messageService): Response
     { //String addition
+        
         $form = $this->createFormBuilder(null)
             ->add('message', TextType::class, [
                 'attr' => [
@@ -42,32 +48,20 @@ class MessageController extends AbstractController
             ->add('send', SubmitType::class)
             ->getForm();
 
+
+        $messages = $messageService->getMessages($id, $user);
+
         $form->handleRequest($request);
-        $convID = $user->getId() > $id ? $id . $user->getId() : $user->getId() . $id;
-        $messages = $entityManager->getRepository(Message::class)->findMessages($convID)->getResult();
-
-        if ($form->get('send')->isClicked()) {
-            $message = new Message();
-
-            $message->setContent($form->getData()['message']);
-            $message->setUserID($user);
-            $message->setUser2($entityManager->getRepository(User::class)->find($id));
-            $convID = $user->getId() > $id ? $id . $user->getId() : $user->getId() . $id;
-            $message->setConversationId($convID);
-
-            //date message
-
-            $entityManager->persist($message);
-            $entityManager->flush();
-
+        
+        if($messageService->handleMessage($form, $id, $user)){
             return $this->redirectToRoute('app_message', ['id' => $id]);
         }
-
 
         return $this->render('message/index.html.twig', [
             'controller_name' => 'MessageController',
             'form' => $form,
             'messages' => $messages,
+            'user' => $user->GetId()
         ]);
     }
 }
