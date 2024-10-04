@@ -39,11 +39,10 @@ class NewArticleController extends AbstractController
     }
 
     #[Route('/buy/{article}', name: "app_buy")]
-    public function buyArticle(int $article, ArticleService $articleService, UserInterface $user, NotifyService $notify)
+    public function buyArticle(int $article, ArticleService $articleService, UserInterface $user)
     {
         $article = $articleService->getFormArticle($article);
         $articleService->buyArticle($article, $user);
-        $notify->SendNotificationTo(sprintf('%s à acheté votre article : %s', $user->GetUsername(), $article->GetName()), $article->GetSeller());
 
         return $this->redirectToRoute('app_catalog');
     }
