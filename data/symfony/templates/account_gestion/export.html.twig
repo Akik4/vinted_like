@@ -1,0 +1,24 @@
+<div>
+
+    <h1>Vendu</h1>
+    {% set recipe = 0%}
+    {% for article in articles %}
+        {% if article.isbuy %}
+        <p style='color:green'>{{ article.name }} | {{ article.price }}     (Selled)</p>
+        {% set recipe = recipe + article.price %}
+        {% endif %}
+    {% endfor %}   
+
+    <h1>Acheté  </h1>
+    {% for article in buyed_articles %}
+    {% if article.isbuy %}
+    <p style='color:red'>{{ article.name }} | {{ article.price }} (buyed)</p>
+    {% set recipe = recipe - article.price %}
+    {% endif %}
+    {% endfor %}  
+
+    <h1>Recette</h1>
+
+    
+    <span>{{ recipe }}</span>
+</div>

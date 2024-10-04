@@ -51,17 +51,19 @@ class NewArticleController extends AbstractController
     #[Route('/export', name: "app_export")]
     public function ExportToPDF(ArticleService $articleService, UserInterface $user, Pdf $weasyPrint,): Response
     {
-        $html = $this->render('account_gestion/index.html.twig', [
+        $html = $this->render('account_gestion/export.html.twig', [
             'articles' => $user->getArticles(),               
             'buyed_articles' => $user->getArticlesBuyed(),               
-        ]);
+        ])->getContent();
+        //header('Content-Type: application/pdf');
+        //header('Content-Disposition: attachment; filename="file.pdf"');
         $pdfContent = $weasyPrint->getOutputFromHtml($html);
 
         return new PdfResponse(
             content: $pdfContent,
             fileName: 'file.pdf',
             contentType: 'application/pdf',
-            contentDisposition: ResponseHeaderBag::DISPOSITION_INLINE,
+            contentDisposition: ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             // or download the file instead of displaying it in the browser with
             // contentDisposition: ResponseHeaderBag::DISPOSITION_ATTACHMENT,
             status: 200,
